@@ -11,6 +11,16 @@
 		B86D11F12B34FAAC0018277D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D11F02B34FAAC0018277D /* ContentView.swift */; };
 		B86D11F32B34FAAD0018277D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B86D11F22B34FAAD0018277D /* Assets.xcassets */; };
 		B86D11F72B34FAAD0018277D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B86D11F62B34FAAD0018277D /* Preview Assets.xcassets */; };
+		B86D11FE2B34FC810018277D /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D11FD2B34FC810018277D /* WelcomeView.swift */; };
+		B86D12002B3501D40018277D /* RecentAlbumsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D11FF2B3501D40018277D /* RecentAlbumsStorage.swift */; };
+		B86D12022B3506790018277D /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D12012B3506790018277D /* AlbumCell.swift */; };
+		B86D12042B35069A0018277D /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D12032B35069A0018277D /* AlbumDetailView.swift */; };
+		B86D12062B3506C50018277D /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D12052B3506C50018277D /* TrackCell.swift */; };
+		B86D12082B3506D90018277D /* MusicItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D12072B3506D90018277D /* MusicItemCell.swift */; };
+		B86D120E2B35206C0018277D /* MusicPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D120D2B35206C0018277D /* MusicPlayerManager.swift */; };
+		B86D12112B3524050018277D /* ProminentButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D12102B3524050018277D /* ProminentButtonStyle.swift */; };
+		B86D12132B352A9A0018277D /* PlayerTray.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D12122B352A9A0018277D /* PlayerTray.swift */; };
+		B86D12162B35317C0018277D /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D12152B35317C0018277D /* PlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +30,16 @@
 		B86D11F22B34FAAD0018277D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B86D11F42B34FAAD0018277D /* MusicVisualizer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MusicVisualizer.entitlements; sourceTree = "<group>"; };
 		B86D11F62B34FAAD0018277D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B86D11FD2B34FC810018277D /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		B86D11FF2B3501D40018277D /* RecentAlbumsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentAlbumsStorage.swift; sourceTree = "<group>"; };
+		B86D12012B3506790018277D /* AlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCell.swift; sourceTree = "<group>"; };
+		B86D12032B35069A0018277D /* AlbumDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailView.swift; sourceTree = "<group>"; };
+		B86D12052B3506C50018277D /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
+		B86D12072B3506D90018277D /* MusicItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItemCell.swift; sourceTree = "<group>"; };
+		B86D120D2B35206C0018277D /* MusicPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerManager.swift; sourceTree = "<group>"; };
+		B86D12102B3524050018277D /* ProminentButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProminentButtonStyle.swift; sourceTree = "<group>"; };
+		B86D12122B352A9A0018277D /* PlayerTray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTray.swift; sourceTree = "<group>"; };
+		B86D12152B35317C0018277D /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,11 +72,18 @@
 		B86D11ED2B34FAAC0018277D /* MusicVisualizer */ = {
 			isa = PBXGroup;
 			children = (
-				B86D11EE2B34FAAC0018277D /* MusicVisualizerApp.swift */,
-				B86D11F02B34FAAC0018277D /* ContentView.swift */,
 				B86D11F22B34FAAD0018277D /* Assets.xcassets */,
 				B86D11F42B34FAAD0018277D /* MusicVisualizer.entitlements */,
 				B86D11F52B34FAAD0018277D /* Preview Content */,
+				B86D11EE2B34FAAC0018277D /* MusicVisualizerApp.swift */,
+				B86D11F02B34FAAC0018277D /* ContentView.swift */,
+				B86D11FD2B34FC810018277D /* WelcomeView.swift */,
+				B86D120D2B35206C0018277D /* MusicPlayerManager.swift */,
+				B86D11FF2B3501D40018277D /* RecentAlbumsStorage.swift */,
+				B86D12142B352B0B0018277D /* Player */,
+				B86D120A2B350CDC0018277D /* Album */,
+				B86D120B2B350D040018277D /* Track */,
+				B86D120F2B3523F80018277D /* Components */,
 			);
 			path = MusicVisualizer;
 			sourceTree = "<group>";
@@ -67,6 +94,41 @@
 				B86D11F62B34FAAD0018277D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B86D120A2B350CDC0018277D /* Album */ = {
+			isa = PBXGroup;
+			children = (
+				B86D12012B3506790018277D /* AlbumCell.swift */,
+				B86D12032B35069A0018277D /* AlbumDetailView.swift */,
+			);
+			path = Album;
+			sourceTree = "<group>";
+		};
+		B86D120B2B350D040018277D /* Track */ = {
+			isa = PBXGroup;
+			children = (
+				B86D12072B3506D90018277D /* MusicItemCell.swift */,
+				B86D12052B3506C50018277D /* TrackCell.swift */,
+			);
+			path = Track;
+			sourceTree = "<group>";
+		};
+		B86D120F2B3523F80018277D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B86D12102B3524050018277D /* ProminentButtonStyle.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		B86D12142B352B0B0018277D /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				B86D12122B352A9A0018277D /* PlayerTray.swift */,
+				B86D12152B35317C0018277D /* PlayerView.swift */,
+			);
+			path = Player;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +201,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B86D12132B352A9A0018277D /* PlayerTray.swift in Sources */,
+				B86D12062B3506C50018277D /* TrackCell.swift in Sources */,
 				B86D11F12B34FAAC0018277D /* ContentView.swift in Sources */,
+				B86D12162B35317C0018277D /* PlayerView.swift in Sources */,
+				B86D12042B35069A0018277D /* AlbumDetailView.swift in Sources */,
+				B86D11FE2B34FC810018277D /* WelcomeView.swift in Sources */,
+				B86D12112B3524050018277D /* ProminentButtonStyle.swift in Sources */,
+				B86D12022B3506790018277D /* AlbumCell.swift in Sources */,
+				B86D12002B3501D40018277D /* RecentAlbumsStorage.swift in Sources */,
+				B86D12082B3506D90018277D /* MusicItemCell.swift in Sources */,
+				B86D120E2B35206C0018277D /* MusicPlayerManager.swift in Sources */,
 				B86D11EF2B34FAAC0018277D /* MusicVisualizerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,6 +346,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Music Visualizer uses Apple Music to help you visualize music.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -312,6 +385,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Music Visualizer uses Apple Music to help you visualize music.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
