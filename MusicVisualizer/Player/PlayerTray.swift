@@ -48,6 +48,11 @@ struct PlayerTray: View {
             .frame(minHeight: 40)
             .padding(8)
         }
-        .background(.thinMaterial.secondary)
+        .background {
+            Rectangle()
+                .foregroundStyle(Color(.secondarySystemBackground))
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .padding(.horizontal, 8)
     }
 }

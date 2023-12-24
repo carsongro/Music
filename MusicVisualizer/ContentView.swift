@@ -16,29 +16,35 @@ struct ContentView: View {
     @State private var albums: MusicItemCollection<Album> = []
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                searchResultsList
-                    .animation(.default, value: albums)
-                
-                Spacer()
+        TabView {
+            NavigationStack {
+                VStack {
+                    searchResultsList
+                        .animation(.default, value: albums)
+                    
+                    Spacer()
+                }
+                .onAppear(perform: recentAlbumsStorage.loadRecentlyViewedAlbums)
+                .onChange(of: WelcomeView.PresentationCoordinator.shared.musicAuthorizationStatus) { _, _ in
+                    recentAlbumsStorage.loadRecentlyViewedAlbums()
+                }
+                .onChange(of: searchTerm) { _, _ in
+                    requestUpdatedSearchResults(for: searchTerm)
+                }
+                .welcomeSheet()
+                .navigationTitle("Music Visualizer")
+                .searchable(text: $searchTerm, prompt: "Albums")
+                .navigationDestination(for: Album.self) { album in
+                    AlbumDetailView(album)
+                }
             }
-            .onAppear(perform: recentAlbumsStorage.loadRecentlyViewedAlbums)
-            .onChange(of: WelcomeView.PresentationCoordinator.shared.musicAuthorizationStatus) { _, _ in
-                recentAlbumsStorage.loadRecentlyViewedAlbums()
+            .tabItem {
+                Label("Home", systemImage: "house.fill")
             }
-            .onChange(of: searchTerm) { _, _ in
-                requestUpdatedSearchResults(for: searchTerm)
+            .tag(1)
+            .safeAreaInset(edge: .bottom) {
+                PlayerTray()
             }
-            .welcomeSheet()
-            .navigationTitle("Music Visualizer")
-            .searchable(text: $searchTerm, prompt: "Albums")
-            .navigationDestination(for: Album.self) { album in
-                AlbumDetailView(album)
-            }
-        }
-        .safeAreaInset(edge: .bottom) {
-            PlayerTray()
         }
     }
     
