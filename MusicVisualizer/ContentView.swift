@@ -1,6 +1,6 @@
 //
-//  ContentView.swift
-//  MusicVisualizer
+//  BrowseSearchView.swift
+//  BottomTray
 //
 //  Created by Carson Gross on 12/21/23.
 //
@@ -8,7 +8,7 @@
 import MusicKit
 import SwiftUI
 
-struct ContentView: View {
+struct BrowseSearchView: View {
     @State private var searchTerm = ""
     @State private var recentAlbumsStorage = RecentAlbumsStorage.shared
     
@@ -16,34 +16,25 @@ struct ContentView: View {
     @State private var albums: MusicItemCollection<Album> = []
     
     var body: some View {
-        TabView {
-            NavigationStack {
-                VStack {
-                    searchResultsList
-                        .animation(.default, value: albums)
-                    
-                    Spacer()
-                }
-                .onAppear(perform: recentAlbumsStorage.loadRecentlyViewedAlbums)
-                .onChange(of: WelcomeView.PresentationCoordinator.shared.musicAuthorizationStatus) { _, _ in
-                    recentAlbumsStorage.loadRecentlyViewedAlbums()
-                }
-                .onChange(of: searchTerm) { _, _ in
-                    requestUpdatedSearchResults(for: searchTerm)
-                }
-                .welcomeSheet()
-                .navigationTitle("Music Visualizer")
-                .searchable(text: $searchTerm, prompt: "Albums")
-                .navigationDestination(for: Album.self) { album in
-                    AlbumDetailView(album)
-                }
+        NavigationStack {
+            VStack {
+                searchResultsList
+                    .animation(.default, value: albums)
+                
+                Spacer()
             }
-            .tabItem {
-                Label("Home", systemImage: "house.fill")
+            .onAppear(perform: recentAlbumsStorage.loadRecentlyViewedAlbums)
+            .onChange(of: WelcomeView.PresentationCoordinator.shared.musicAuthorizationStatus) { _, _ in
+                recentAlbumsStorage.loadRecentlyViewedAlbums()
             }
-            .tag(1)
-            .safeAreaInset(edge: .bottom) {
-                PlayerTray()
+            .onChange(of: searchTerm) { _, _ in
+                requestUpdatedSearchResults(for: searchTerm)
+            }
+            .welcomeSheet()
+            .navigationTitle("Music Visualizer")
+            .searchable(text: $searchTerm, prompt: "Albums")
+            .navigationDestination(for: Album.self) { album in
+                AlbumDetailView(album)
             }
         }
     }
@@ -136,5 +127,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    BrowseSearchView()
 }

@@ -1,6 +1,6 @@
 //
 //  ProminentButtonStyle.swift
-//  MusicVisualizer
+//  BottomTray
 //
 //  Created by Carson Gross on 12/21/23.
 //
