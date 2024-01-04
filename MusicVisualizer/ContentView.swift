@@ -8,7 +8,7 @@
 import MusicKit
 import SwiftUI
 
-struct BrowseSearchView: View {
+struct ContentView: View {
     @State private var searchTerm = ""
     @State private var recentAlbumsStorage = RecentAlbumsStorage.shared
     
@@ -127,5 +127,5 @@ struct BrowseSearchView: View {
 }
 
 #Preview {
-    BrowseSearchView()
+    ContentView()
 }
