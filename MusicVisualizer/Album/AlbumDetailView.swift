@@ -10,7 +10,7 @@ import SwiftUI
 
 /// `AlbumDetailView` is a view that presents detailed information about a specific `Album`.
 struct AlbumDetailView: View {
-       
+    @Environment(\.dismiss) private var dismiss
     let album: Album
     @State var tracks: MusicItemCollection<Track>?
     @State var relatedAlbums: MusicItemCollection<Album>?
@@ -155,5 +155,12 @@ struct AlbumDetailView: View {
         subscriptionOfferOptions.messageIdentifier = .playMusic
         subscriptionOfferOptions.itemID = album.id
         isShowingSubscriptionOffer = true
+    }
+}
+
+extension UINavigationController {
+    open override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        navigationBar.topItem?.backButtonDisplayMode = .minimal
     }
 }

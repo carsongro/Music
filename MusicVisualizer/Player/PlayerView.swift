@@ -5,24 +5,28 @@
 //  Created by Carson Gross on 12/21/23.
 //
 
+import MediaPlayer
 import MusicKit
 import SwiftUI
 
 struct PlayerView: View {
     @ObservedObject private var playerState = ApplicationMusicPlayer.shared.state
     private let player = ApplicationMusicPlayer.shared
-    @Namespace private var namespace
+    @State private var animatedIsPlaying = ApplicationMusicPlayer.shared.state.playbackStatus == .playing
     
     var body: some View {
-        ZStack {
-            gradient
-            
-            VStack {
+        List {
+            Section {
                 if let artwork = player.queue.currentEntry?.artwork {
-                    ArtworkImage(artwork, width: 200)
-                        .matchedGeometryEffect(id: artwork.hashValue, in: namespace)
+                    ArtworkImage(artwork, width: animatedIsPlaying ? 320 : 250)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                
+            }
+            .frame(height: 320)
+            .frame(maxWidth: .infinity)
+            .listRowSeparator(.hidden)
+            
+            Section {
                 HStack {
                     Text(player.queue.currentEntry?.title ?? "Nothing is playing")
                         .lineLimit(1)
@@ -30,7 +34,12 @@ struct PlayerView: View {
                     
                     Spacer()
                 }
-                
+            }
+            .listRowSeparator(.hidden)
+            .frame(width: 320)
+            .frame(maxWidth: .infinity)
+            
+            Section {
                 Button {
                     MusicPlayerManager.shared.handlePlayPause()
                 } label: {
@@ -38,30 +47,80 @@ struct PlayerView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 }
-                .buttonStyle(.plain)
                 .frame(width: 30, height: 30)
-                .padding(.trailing, 20)
+                .frame(maxWidth: .infinity)
                 .transaction { transaction in
                     transaction.animation = .none
                 }
             }
-            .padding()
+            .listRowSeparator(.hidden)
+            
+            Section {
+                HStack(alignment: .center) {
+                    Image(systemName: "speaker.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundStyle(.secondary)
+                        .frame(width: 15, height: 15)
+                    
+                    MusicVolumeSlider() // For some reason UIViewRepresentable get rid of the presentationDragIndicator
+                        .frame(alignment: .center)
+                    
+                    Image(systemName: "speaker.wave.3.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundStyle(.secondary)
+                        .frame(width: 22, height: 22)
+                }
+            }
+            .listRowSeparator(.hidden)
+            .frame(width: 320)
+            .frame(maxWidth: .infinity)
         }
-        .ignoresSafeArea()
+        .listStyle(.plain)
+        .listSectionSpacing(20)
+        .padding(.vertical)
+        .onChange(of: playerState.playbackStatus) { oldValue, newValue in
+            withAnimation(.bouncy) {
+                if newValue == .playing {
+                    animatedIsPlaying = true
+                } else {
+                    animatedIsPlaying = false
+                }
+            }
+        }
+    }
+}
+
+struct MusicVolumeSlider: UIViewRepresentable {
+    class VolumeSlider: MPVolumeView {
+        override func volumeSliderRect(forBounds bounds: CGRect) -> CGRect {
+            var newBounds = super.volumeSliderRect(forBounds: bounds)
+            newBounds.origin.y = bounds.origin.y
+            newBounds.size.height = bounds.size.height
+            return newBounds
+        }
+        
+        override func volumeThumbRect(
+            forBounds bounds: CGRect,
+            volumeSliderRect rect: CGRect,
+            value: Float
+        ) -> CGRect {
+            var newBounds = super.volumeThumbRect(forBounds: bounds, volumeSliderRect: rect, value: value)
+            newBounds.origin.y = bounds.origin.y
+            newBounds.size.height = bounds.size.height
+            return newBounds
+        }
     }
     
-    private var gradient: some View {
-        LinearGradient(
-            gradient: Gradient(colors: [
-                Color(red: (130.0 / 255.0), green: (109.0 / 255.0), blue: (204.0 / 255.0)),
-                Color(red: (130.0 / 255.0), green: (130.0 / 255.0), blue: (211.0 / 255.0)),
-                Color(red: (131.0 / 255.0), green: (160.0 / 255.0), blue: (218.0 / 255.0))
-            ]),
-            startPoint: .leading,
-            endPoint: .trailing
-        )
-        .flipsForRightToLeftLayoutDirection(false)
-        .ignoresSafeArea()
+    func makeUIView(context: Context) -> MPVolumeView {
+        let volumeView = VolumeSlider(frame: .zero)
+        volumeView.setVolumeThumbImage(UIImage(), for: .normal)
+        return volumeView
+    }
+    
+    func updateUIView(_ uiView: MPVolumeView, context: Context) {
+        
     }
 }
 

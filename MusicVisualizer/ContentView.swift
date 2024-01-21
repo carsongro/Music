@@ -15,26 +15,50 @@ struct ContentView: View {
     /// The albums the app loads using MusicKit that match the current search term.
     @State private var albums: MusicItemCollection<Album> = []
     
+    @State private var showingFullScreenPlayer = false
+    
     var body: some View {
-        NavigationStack {
-            VStack {
-                searchResultsList
-                    .animation(.default, value: albums)
+        TabView {
+            Group {
+                NavigationStack {
+                    VStack {
+                        searchResultsList
+                            .animation(.default, value: albums)
+                        
+                        Spacer()
+                    }
+                    .onAppear(perform: recentAlbumsStorage.loadRecentlyViewedAlbums)
+                    .onChange(of: WelcomeView.PresentationCoordinator.shared.musicAuthorizationStatus) { _, _ in
+                        recentAlbumsStorage.loadRecentlyViewedAlbums()
+                    }
+                    .onChange(of: searchTerm) { _, _ in
+                        requestUpdatedSearchResults(for: searchTerm)
+                    }
+                    .welcomeSheet()
+                    .navigationTitle("Search")
+                    .searchable(text: $searchTerm, prompt: "Albums")
+                    .navigationDestination(for: Album.self) { album in
+                        AlbumDetailView(album)
+                    }
+                }
+                .tabItem { Label("Search", systemImage: "magnifyingglass") }
                 
-                Spacer()
+                NavigationStack {
+                    Text("Hello World!")
+                }
+                .tabItem { Label("Library", systemImage: "music.note.list") }
             }
-            .onAppear(perform: recentAlbumsStorage.loadRecentlyViewedAlbums)
-            .onChange(of: WelcomeView.PresentationCoordinator.shared.musicAuthorizationStatus) { _, _ in
-                recentAlbumsStorage.loadRecentlyViewedAlbums()
+            .safeAreaInset(edge: .bottom) {
+                if MusicPlayerManager.shared.isPlaybackQueueSet {
+                    PlayerTray()
+                        .onTapGesture {
+                            showingFullScreenPlayer = true
+                        }
+                }
             }
-            .onChange(of: searchTerm) { _, _ in
-                requestUpdatedSearchResults(for: searchTerm)
-            }
-            .welcomeSheet()
-            .navigationTitle("Music Visualizer")
-            .searchable(text: $searchTerm, prompt: "Albums")
-            .navigationDestination(for: Album.self) { album in
-                AlbumDetailView(album)
+            .sheet(isPresented: $showingFullScreenPlayer) {
+                PlayerView()
+                    .presentationDragIndicator(.visible)
             }
         }
     }
