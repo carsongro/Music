@@ -40,17 +40,39 @@ struct PlayerView: View {
             .frame(maxWidth: .infinity)
             
             Section {
-                Button {
-                    MusicPlayerManager.shared.handlePlayPause()
-                } label: {
-                    Image(systemName: playerState.playbackStatus == .playing ? "pause.fill" : "play.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                }
-                .frame(width: 30, height: 30)
-                .frame(maxWidth: .infinity)
-                .transaction { transaction in
-                    transaction.animation = .none
+                HStack {
+                    Button {
+                        MusicPlayerManager.shared.handleSkipToPrevious()
+                    } label: {
+                        Image(systemName: "backward.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                    .frame(width: 40, height: 40)
+                    .frame(maxWidth: .infinity)
+                    
+                    Button {
+                        MusicPlayerManager.shared.handlePlayPause()
+                    } label: {
+                        Image(systemName: playerState.playbackStatus == .playing ? "pause.fill" : "play.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                    .frame(width: 30, height: 30)
+                    .frame(maxWidth: .infinity)
+                    .transaction { transaction in
+                        transaction.animation = .none
+                    }
+                    
+                    Button {
+                        MusicPlayerManager.shared.handleSkipToNext()
+                    } label: {
+                        Image(systemName: "forward.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                    .frame(width: 40, height: 40)
+                    .frame(maxWidth: .infinity)
                 }
             }
             .listRowSeparator(.hidden)

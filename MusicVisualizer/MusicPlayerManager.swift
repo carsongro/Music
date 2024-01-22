@@ -42,6 +42,14 @@ import Foundation
         }
     }
     
+    func handleSkipToPrevious() {
+        
+    }
+    
+    func handleSkipToNext() {
+        
+    }
+    
     func handlePlayButtonSelected(album: Album) {
         if album != self.album {
             isPlaybackQueueSet = false

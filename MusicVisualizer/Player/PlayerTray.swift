@@ -29,18 +29,31 @@ struct PlayerTray: View {
                 
                 Spacer()
                 
-                Button {
-                    MusicPlayerManager.shared.handlePlayPause()
-                } label: {
-                    Image(systemName: playerState.playbackStatus == .playing ? "pause.fill" : "play.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                }
-                .buttonStyle(.plain)
-                .frame(width: 20, height: 20)
-                .padding(.trailing, 20)
-                .transaction { transaction in
-                    transaction.animation = .none
+                HStack {
+                    Button {
+                        MusicPlayerManager.shared.handlePlayPause()
+                    } label: {
+                        Image(systemName: playerState.playbackStatus == .playing ? "pause.fill" : "play.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.trailing, 8)
+                    .frame(width: 30, height: 30)
+                    .transaction { transaction in
+                        transaction.animation = .none
+                    }
+                    
+                    Button {
+                        MusicPlayerManager.shared.handleSkipToNext()
+                    } label: {
+                        Image(systemName: "forward.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                    .buttonStyle(.plain)
+                    .frame(width: 30, height: 30)
+                    .padding(.trailing, 20)
                 }
             }
             .frame(minHeight: 45)
