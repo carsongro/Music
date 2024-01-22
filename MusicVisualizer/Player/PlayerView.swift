@@ -40,60 +40,12 @@ struct PlayerView: View {
             .frame(maxWidth: .infinity)
             
             Section {
-                HStack {
-                    Button {
-                        MusicPlayerManager.shared.handleSkipToPrevious()
-                    } label: {
-                        Image(systemName: "backward.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    }
-                    .frame(width: 40, height: 40)
-                    .frame(maxWidth: .infinity)
-                    
-                    Button {
-                        MusicPlayerManager.shared.handlePlayPause()
-                    } label: {
-                        Image(systemName: playerState.playbackStatus == .playing ? "pause.fill" : "play.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    }
-                    .frame(width: 30, height: 30)
-                    .frame(maxWidth: .infinity)
-                    .transaction { transaction in
-                        transaction.animation = .none
-                    }
-                    
-                    Button {
-                        MusicPlayerManager.shared.handleSkipToNext()
-                    } label: {
-                        Image(systemName: "forward.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    }
-                    .frame(width: 40, height: 40)
-                    .frame(maxWidth: .infinity)
-                }
+                playbackControls
             }
             .listRowSeparator(.hidden)
             
             Section {
-                HStack(alignment: .center) {
-                    Image(systemName: "speaker.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundStyle(.secondary)
-                        .frame(width: 15, height: 15)
-                    
-                    MusicVolumeSlider() // For some reason UIViewRepresentable get rid of the presentationDragIndicator
-                        .frame(alignment: .center)
-                    
-                    Image(systemName: "speaker.wave.3.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundStyle(.secondary)
-                        .frame(width: 22, height: 22)
-                }
+                volumeControls
             }
             .listRowSeparator(.hidden)
             .frame(width: 320)
@@ -110,6 +62,62 @@ struct PlayerView: View {
                     animatedIsPlaying = false
                 }
             }
+        }
+    }
+    
+    private var volumeControls: some View {
+        HStack(alignment: .center) {
+            Image(systemName: "speaker.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundStyle(.secondary)
+                .frame(width: 15, height: 15)
+            
+            MusicVolumeSlider() // For some reason UIViewRepresentable get rid of the presentationDragIndicator
+                .frame(alignment: .center)
+            
+            Image(systemName: "speaker.wave.3.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundStyle(.secondary)
+                .frame(width: 22, height: 22)
+        }
+    }
+    
+    private var playbackControls: some View {
+        HStack {
+            Button {
+                MusicPlayerManager.shared.handleSkipToPrevious()
+            } label: {
+                Image(systemName: "backward.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            }
+            .frame(width: 40, height: 40)
+            .frame(maxWidth: .infinity)
+            
+            Button {
+                MusicPlayerManager.shared.handlePlayPause()
+            } label: {
+                Image(systemName: playerState.playbackStatus == .playing ? "pause.fill" : "play.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            }
+            .frame(width: 30, height: 30)
+            .frame(maxWidth: .infinity)
+            .transaction { transaction in
+                transaction.animation = .none
+            }
+            
+            Button {
+                MusicPlayerManager.shared.handleSkipToNext()
+            } label: {
+                Image(systemName: "forward.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            }
+            .frame(width: 40, height: 40)
+            .frame(maxWidth: .infinity)
         }
     }
 }

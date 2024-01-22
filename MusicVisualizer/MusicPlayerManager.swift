@@ -22,7 +22,7 @@ import Foundation
     
     /// `true` when the album detail view sets a playback queue on the player.
     public private(set) var isPlaybackQueueSet = false
-        
+    
     private var isPlaying: Bool {
         playerState.playbackStatus == .playing
     }
@@ -43,11 +43,47 @@ import Foundation
     }
     
     func handleSkipToPrevious() {
-        
+        guard isPlaybackQueueSet else { return }
+        if isPlaying {
+            Task {
+                do {
+                    try await player.skipToPreviousEntry()
+                } catch {
+                    print("Failed to skip to next entry")
+                }
+            }
+        } else {
+            Task {
+                do {
+                    try await player.skipToPreviousEntry()
+                    try await player.play()
+                } catch {
+                    print("Failed to skip to next entry")
+                }
+            }
+        }
     }
     
     func handleSkipToNext() {
-        
+        guard isPlaybackQueueSet else { return }
+        if isPlaying {
+            Task {
+                do {
+                    try await player.skipToNextEntry()
+                } catch {
+                    print("Failed to skip to next entry")
+                }
+            }
+        } else {
+            Task {
+                do {
+                    try await player.skipToNextEntry()
+                    try await player.play()
+                } catch {
+                    print("Failed to skip to next entry")
+                }
+            }
+        }
     }
     
     func handlePlayButtonSelected(album: Album) {
