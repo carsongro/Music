@@ -12,48 +12,57 @@ import SwiftUI
 struct PlayerView: View {
     @ObservedObject private var playerState = ApplicationMusicPlayer.shared.state
     private let player = ApplicationMusicPlayer.shared
+    
     @State private var animatedIsPlaying = ApplicationMusicPlayer.shared.state.playbackStatus == .playing
     
     var body: some View {
         List {
             Section {
                 if let artwork = player.queue.currentEntry?.artwork {
-                    ArtworkImage(artwork, width: animatedIsPlaying ? 320 : 250)
+                    ArtworkImage(artwork, width: animatedIsPlaying ? 330 : 250)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .shadow(radius: 8)
                 }
             }
-            .frame(height: 320)
+            .frame(height: 330)
             .frame(maxWidth: .infinity)
             .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
             
             Section {
                 HStack {
-                    Text(player.queue.currentEntry?.title ?? "Nothing is playing")
-                        .lineLimit(1)
-                        .fontWeight(.semibold)
+                    VStack(alignment: .leading) {
+                        Text(player.queue.currentEntry?.title ?? "Nothing is playing")
+                            .lineLimit(1)
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                        
+                        Text(player.queue.currentEntry?.subtitle ?? "")
+                            .foregroundStyle(.secondary)
+                            .font(.title3)
+                    }
                     
                     Spacer()
                 }
             }
-            .listRowSeparator(.hidden)
-            .frame(width: 320)
-            .frame(maxWidth: .infinity)
+            .playerSectionStyle()
             
             Section {
                 playbackControls
             }
             .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
             
             Section {
                 volumeControls
             }
-            .listRowSeparator(.hidden)
-            .frame(width: 320)
-            .frame(maxWidth: .infinity)
+            .playerSectionStyle()
         }
+        .background(backgroundBlurImage)
+        .scrollContentBackground(.hidden)
         .listStyle(.plain)
         .listSectionSpacing(20)
-        .padding(.vertical)
+        .padding(.top, 20)
         .onChange(of: playerState.playbackStatus) { oldValue, newValue in
             withAnimation(.bouncy) {
                 if newValue == .playing {
@@ -62,6 +71,15 @@ struct PlayerView: View {
                     animatedIsPlaying = false
                 }
             }
+        }
+    }
+    
+    @ViewBuilder
+    private var backgroundBlurImage: some View {
+        if let artwork = player.queue.currentEntry?.artwork {
+            ArtworkImage(artwork, width: 1000)
+                .aspectRatio(contentMode: .fill)
+                .blur(radius: 40)
         }
     }
     
@@ -93,6 +111,7 @@ struct PlayerView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
+            .buttonStyle(.plain)
             .frame(width: 40, height: 40)
             .frame(maxWidth: .infinity)
             
@@ -103,7 +122,8 @@ struct PlayerView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
-            .frame(width: 30, height: 30)
+            .buttonStyle(.plain)
+            .frame(width: 38, height: 38)
             .frame(maxWidth: .infinity)
             .transaction { transaction in
                 transaction.animation = .none
@@ -116,9 +136,26 @@ struct PlayerView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
+            .buttonStyle(.plain)
             .frame(width: 40, height: 40)
             .frame(maxWidth: .infinity)
         }
+    }
+}
+
+struct Centered: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .listRowSeparator(.hidden)
+            .frame(width: 330)
+            .frame(maxWidth: .infinity)
+            .listRowBackground(Color.clear)
+    }
+}
+
+extension View {
+    func playerSectionStyle() -> some View {
+        modifier(Centered())
     }
 }
 

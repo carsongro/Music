@@ -38,7 +38,7 @@ struct PlayerTray: View {
                             .aspectRatio(contentMode: .fit)
                     }
                     .buttonStyle(.plain)
-                    .padding(.trailing, 8)
+                    .padding(.trailing, 14)
                     .frame(width: 30, height: 30)
                     .transaction { transaction in
                         transaction.animation = .none
