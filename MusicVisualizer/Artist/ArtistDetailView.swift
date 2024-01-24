@@ -39,14 +39,21 @@ struct ArtistDetailView: View {
                         Section {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 LazyHGrid(rows: rows) {
-                                    ForEach(songs) { song in
+                                    ForEach(songs.prefix(upTo: 8)) { song in
                                         SongCell(song) {
                                             MusicPlayerManager.shared.handleSongSelected(song)
                                         }
-                                        .frame(maxWidth: 200, maxHeight: 100)
+                                        .containerRelativeFrame(
+                                            .horizontal,
+                                            count: 4,
+                                            span: 3,
+                                            spacing: 10.0
+                                        )
                                     }
+                                    .scrollTargetLayout()
                                 }
                             }
+                            .scrollTargetBehavior(.paging)
                         }
                         .listSectionSeparator(.hidden)
                     }

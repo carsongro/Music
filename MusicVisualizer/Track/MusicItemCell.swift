@@ -37,6 +37,8 @@ struct MusicItemCell: View {
                         .padding(.top, -4.0)
                 }
             }
+            
+            Spacer()
         }
     }
 }
