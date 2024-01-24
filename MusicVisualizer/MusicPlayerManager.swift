@@ -119,6 +119,12 @@ import Foundation
         beginPlaying()
     }
     
+    func handleSongSelected(_ song: Song) {
+        player.queue = ApplicationMusicPlayer.Queue(for: [song], startingAt: song)
+        isPlaybackQueueSet = true
+        beginPlaying()
+    }
+    
     /// A convenience method for beginning music playback.
     ///
     /// Call this instead of `MusicPlayer`’s `play()`

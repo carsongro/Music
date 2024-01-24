@@ -14,6 +14,9 @@ struct ContentView: View {
     
     /// The albums the app loads using MusicKit that match the current search term.
     @State private var albums: MusicItemCollection<Album> = []
+    @State private var songs: MusicItemCollection<Song> = []
+    @State private var artists: MusicItemCollection<Artist> = []
+    @State private var topResults: MusicItemCollection<MusicCatalogSearchResponse.TopResult> = []
     
     @State private var showingFullScreenPlayer = false
     
@@ -36,9 +39,12 @@ struct ContentView: View {
                     }
                     .welcomeSheet()
                     .navigationTitle("Search")
-                    .searchable(text: $searchTerm, prompt: "Albums")
+                    .searchable(text: $searchTerm, prompt: "Albums, Songs, and Artists")
                     .navigationDestination(for: Album.self) { album in
                         AlbumDetailView(album)
+                    }
+                    .navigationDestination(for: Artist.self) { artist in
+                        ArtistDetailView(artist: artist)
                     }
                 }
                 .tabItem { Label("Search", systemImage: "magnifyingglass") }
@@ -73,12 +79,26 @@ struct ContentView: View {
             .listRowSeparator(.hidden, edges: .top)
             
             Section {
-                ForEach(albums.isEmpty ? recentAlbumsStorage.recentlyViewedAlbums : albums) { album in
-                    AlbumCell(album)
+                ForEach(topResults) { result in
+                    switch result {
+                    case .album(let album):
+                        AlbumCell(album)
+                    case .artist(let artist):
+                        NavigationLink(value: artist) {
+                            ArtistCell(artist: artist)
+                        }
+                    case .song(let song):
+                        SongCell(song) {
+                            MusicPlayerManager.shared.handleSongSelected(song)
+                        }
+                    default:
+                        Color.clear
+                    }
                 }
             }
         }
         .listStyle(.plain)
+        .padding(.bottom, 20)
     }
     
     @ViewBuilder
@@ -116,14 +136,14 @@ struct ContentView: View {
     /// Safely resets the `albums` property on the main thread.
     @MainActor
     private func reset() {
-        self.albums = []
+        self.topResults = []
     }
     
     /// Safely updates the `albums` property on the main thread.
     @MainActor
     private func apply(_ searchResponse: MusicCatalogSearchResponse, for searchTerm: String) {
         if self.searchTerm == searchTerm {
-            self.albums = searchResponse.albums
+            self.topResults = searchResponse.topResults
         }
     }
     
@@ -135,8 +155,16 @@ struct ContentView: View {
             } else {
                 do {
                     // Issue a catalog search request for albums matching the search term.
-                    var searchRequest = MusicCatalogSearchRequest(term: searchTerm, types: [Album.self])
-                    searchRequest.limit = 5
+                    var searchRequest = MusicCatalogSearchRequest(
+                        term: searchTerm,
+                        types: [
+                            Album.self,
+                            Song.self,
+                            Artist.self
+                        ]
+                    )
+                    searchRequest.includeTopResults = true
+                    searchRequest.limit = 10
                     let searchResponse = try await searchRequest.response()
                     
                     // Update the user interface with the search response.

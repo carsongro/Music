@@ -22,7 +22,7 @@ struct AlbumCell: View {
             MusicItemCell(
                 artwork: album.artwork,
                 title: album.title,
-                subtitle: album.artistName
+                subtitle: "Album · " + album.artistName
             )
         }
     }
