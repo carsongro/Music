@@ -12,6 +12,13 @@ struct ArtistDetailView: View {
     var artist: Artist
     @State private var fullArtist: Artist?
     
+    let rows = [
+        GridItem(.fixed(80)),
+        GridItem(.fixed(80)),
+        GridItem(.fixed(80)),
+        GridItem(.fixed(80))
+    ]
+    
     var body: some View {
         Group {
             if let fullArtist {
@@ -25,18 +32,23 @@ struct ArtistDetailView: View {
                         Text(fullArtist.name)
                     }
                     .listRowSeparator(.hidden)
+                    .listSectionSeparator(.hidden)
                     .frame(maxWidth: .infinity)
                     
-                    if let albums = fullArtist.albums {
+                    if let songs = fullArtist.topSongs {
                         Section {
                             ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(albums) { albums in
-                                        AlbumCell(albums)
+                                LazyHGrid(rows: rows) {
+                                    ForEach(songs) { song in
+                                        SongCell(song) {
+                                            MusicPlayerManager.shared.handleSongSelected(song)
+                                        }
+                                        .frame(maxWidth: 200, maxHeight: 100)
                                     }
                                 }
                             }
                         }
+                        .listSectionSeparator(.hidden)
                     }
                 }
                 .listStyle(.plain)
@@ -47,7 +59,6 @@ struct ArtistDetailView: View {
         .task {
             do {
                 fullArtist = try await artist.with([.featuredAlbums, .topSongs, .albums, .latestRelease])
-                dump(fullArtist?.featuredAlbums)
             } catch {
                 print("Error fetching artist details: \(error.localizedDescription)")
             }
