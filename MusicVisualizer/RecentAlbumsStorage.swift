@@ -38,7 +38,7 @@ import MusicKit
         }
     }
 
-    // TODO: MAKE THIS WORK
+    // TODO: MAKE THIS WORK, IT MIGHT NOT BECAUSE MUSIC KIT NOT @Observable
     /// Begins observing MusicKit authorization status.
     func beginObservingMusicAuthorizationStatus() {
         _ = withObservationTracking {

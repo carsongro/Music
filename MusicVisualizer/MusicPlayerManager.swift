@@ -115,14 +115,12 @@ import Foundation
     /// The action to perform when the user taps a track in the list of tracks.
     func handleTrackSelected(_ track: Track, loadedTracks: MusicItemCollection<Track>) {
         player.queue = ApplicationMusicPlayer.Queue(for: loadedTracks, startingAt: track)
-        album = track.albums?.first
         isPlaybackQueueSet = true
         beginPlaying()
     }
     
     func handleSongSelected(_ song: Song) {
         player.queue = ApplicationMusicPlayer.Queue(for: [song], startingAt: song)
-        album = song.albums?.first
         isPlaybackQueueSet = true
         beginPlaying()
     }

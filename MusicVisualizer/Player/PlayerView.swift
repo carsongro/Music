@@ -16,53 +16,38 @@ struct PlayerView: View {
     @State private var animatedIsPlaying = ApplicationMusicPlayer.shared.state.playbackStatus == .playing
     
     var body: some View {
-        List {
-            Section {
-                if let artwork = player.queue.currentEntry?.artwork {
-                    ArtworkImage(artwork, width: animatedIsPlaying ? 330 : 250)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .shadow(radius: 8, y: 8)
-                }
+        VStack(spacing: 30) {
+            if let artwork = player.queue.currentEntry?.artwork {
+                ArtworkImage(artwork, width: animatedIsPlaying ? 330 : 250)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .shadow(radius: 8, y: 8)
+                    .frame(height: 330)
             }
-            .frame(height: 330)
-            .frame(maxWidth: .infinity)
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
             
-            Section {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(player.queue.currentEntry?.title ?? "Nothing is playing")
-                            .lineLimit(1)
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                        
-                        Text(player.queue.currentEntry?.subtitle ?? "")
-                            .foregroundStyle(.secondary)
-                            .font(.title3)
-                    }
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(player.queue.currentEntry?.title ?? "Nothing is playing")
+                        .lineLimit(1)
+                        .font(.title3)
+                        .fontWeight(.semibold)
                     
-                    Spacer()
+                    Text(player.queue.currentEntry?.subtitle ?? "")
+                        .foregroundStyle(.secondary)
+                        .font(.title3)
                 }
+                
+                Spacer()
             }
-            .playerSectionStyle()
             
-            Section {
-                playbackControls
-            }
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
+            playbackControls
             
-            Section {
-                volumeControls
-            }
-            .playerSectionStyle()
+            volumeControls
+            
+            Spacer()
         }
+        .frame(width: 330)
         .background(backgroundBlurImage)
-        .scrollContentBackground(.hidden)
-        .listStyle(.plain)
-        .listSectionSpacing(20)
-        .padding(.top, 20)
+        .padding(.top, 30)
         .onChange(of: playerState.playbackStatus) { oldValue, newValue in
             withAnimation(.bouncy) {
                 if newValue == .playing {
@@ -79,7 +64,7 @@ struct PlayerView: View {
         if let artwork = player.queue.currentEntry?.artwork {
             ArtworkImage(artwork, width: 1000)
                 .aspectRatio(contentMode: .fill)
-                .blur(radius: 40)
+                .blur(radius: 60)
         }
     }
     
@@ -100,6 +85,7 @@ struct PlayerView: View {
                 .foregroundStyle(.secondary)
                 .frame(width: 22, height: 22)
         }
+        .frame(height: 44)
     }
     
     private var playbackControls: some View {
@@ -140,22 +126,6 @@ struct PlayerView: View {
             .frame(width: 40, height: 40)
             .frame(maxWidth: .infinity)
         }
-    }
-}
-
-struct Centered: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .listRowSeparator(.hidden)
-            .frame(width: 330)
-            .frame(maxWidth: .infinity)
-            .listRowBackground(Color.clear)
-    }
-}
-
-extension View {
-    func playerSectionStyle() -> some View {
-        modifier(Centered())
     }
 }
 
