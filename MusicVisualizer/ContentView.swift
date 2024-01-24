@@ -79,20 +79,24 @@ struct ContentView: View {
             .listRowSeparator(.hidden, edges: .top)
             
             Section {
-                ForEach(topResults) { result in
-                    switch result {
-                    case .album(let album):
+                if topResults.isEmpty {
+                    ForEach(recentAlbumsStorage.recentlyViewedAlbums) { album in
                         AlbumCell(album)
-                    case .artist(let artist):
-                        NavigationLink(value: artist) {
+                    }
+                } else {
+                    ForEach(topResults) { result in
+                        switch result {
+                        case .album(let album):
+                            AlbumCell(album)
+                        case .artist(let artist):
                             ArtistCell(artist: artist)
+                        case .song(let song):
+                            SongCell(song) {
+                                MusicPlayerManager.shared.handleSongSelected(song)
+                            }
+                        default:
+                            Color.clear
                         }
-                    case .song(let song):
-                        SongCell(song) {
-                            MusicPlayerManager.shared.handleSongSelected(song)
-                        }
-                    default:
-                        Color.clear
                     }
                 }
             }

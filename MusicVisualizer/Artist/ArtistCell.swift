@@ -12,21 +12,23 @@ struct ArtistCell: View {
     var artist: Artist
     
     var body: some View {
-        HStack {
-            if let artwork = artist.artwork {
-                VStack {
-                    Spacer()
-                    ArtworkImage(artwork, width: 56)
-                        .clipShape(Circle())
-                    Spacer()
+        NavigationLink(value: artist) {
+            HStack {
+                if let artwork = artist.artwork {
+                    VStack {
+                        Spacer()
+                        ArtworkImage(artwork, width: 56)
+                            .clipShape(Circle())
+                        Spacer()
+                    }
                 }
-            }
-            
-            VStack(alignment: .leading) {
-                Text(artist.name)
                 
-                Text("Artist")
-                    .foregroundStyle(.secondary)
+                VStack(alignment: .leading) {
+                    Text(artist.name)
+                    
+                    Text("Artist")
+                        .foregroundStyle(.secondary)
+                }
             }
         }
     }
