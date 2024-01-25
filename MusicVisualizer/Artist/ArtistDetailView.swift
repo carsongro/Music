@@ -12,11 +12,11 @@ struct ArtistDetailView: View {
     var artist: Artist
     @State private var fullArtist: Artist?
     
-    let rows = [
-        GridItem(.fixed(80)),
-        GridItem(.fixed(80)),
-        GridItem(.fixed(80)),
-        GridItem(.fixed(80))
+    let topSongRows = [
+        GridItem(.fixed(45)),
+        GridItem(.fixed(45)),
+        GridItem(.fixed(45)),
+        GridItem(.fixed(45))
     ]
     
     var body: some View {
@@ -38,22 +38,37 @@ struct ArtistDetailView: View {
                     if let songs = fullArtist.topSongs {
                         Section {
                             ScrollView(.horizontal, showsIndicators: false) {
-                                LazyHGrid(rows: rows) {
+                                LazyHGrid(rows: topSongRows) {
                                     ForEach(songs.prefix(upTo: 8)) { song in
-                                        SongCell(song) {
+                                        ArtistSongCell(song) {
                                             MusicPlayerManager.shared.handleSongSelected(song)
                                         }
                                         .containerRelativeFrame(
                                             .horizontal,
-                                            count: 4,
-                                            span: 3,
-                                            spacing: 10.0
+                                            count: 10,
+                                            span: 9,
+                                            spacing: 20
                                         )
                                     }
                                     .scrollTargetLayout()
                                 }
                             }
                             .scrollTargetBehavior(.paging)
+                        }
+                        .listSectionSeparator(.hidden)
+                    }
+                    
+                    if let albums = fullArtist.albums {
+                        Section {
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    ForEach(albums) { album in
+                                        AlbumIconCell(album)
+                                    }
+                                }
+                                .scrollTargetLayout()
+                            }
+                            .scrollTargetBehavior(.viewAligned(limitBehavior: .never))
                         }
                         .listSectionSeparator(.hidden)
                     }

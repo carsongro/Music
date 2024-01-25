@@ -19,7 +19,7 @@ struct PlayerView: View {
         VStack(spacing: 30) {
             if let artwork = player.queue.currentEntry?.artwork {
                 ArtworkImage(artwork, width: animatedIsPlaying ? 330 : 250)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
                     .shadow(radius: 8, y: 8)
                     .frame(height: 330)
             }
