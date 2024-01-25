@@ -51,7 +51,9 @@ struct AlbumDetailView: View {
                 musicSubscription = subscription
             }
         }
+        #if canImport(MusicSubscriptionOffer)
         .musicSubscriptionOffer(isPresented: $isShowingSubscriptionOffer, options: subscriptionOfferOptions)
+        #endif
     }
     
     private var header: some View {
@@ -118,8 +120,8 @@ struct AlbumDetailView: View {
                 MusicPlayerManager.shared.handlePlayButtonSelected(album: album)
             } label: {
                 HStack {
-                    Image(systemName: (isPlaying ? "pause.fill" : "play.fill"))
-                    Text((isPlaying ? pauseButtonTitle : playButtonTitle))
+                    Image(systemName: "play.fill")
+                    Text(playButtonTitle)
                 }
                 .frame(maxWidth: 200)
             }
@@ -148,13 +150,17 @@ struct AlbumDetailView: View {
     
     @State private var isShowingSubscriptionOffer = false
     
+    #if canImport(MusicSubscriptionOffer)
     @State private var subscriptionOfferOptions: MusicSubscriptionOffer.Options = .default
+    #endif
     
     /// Computes the presentation state for a subscription offer.
     private func handleSubscriptionOfferButtonSelected() {
+        #if canImport(MusicSubscriptionOffer)
         subscriptionOfferOptions.messageIdentifier = .playMusic
         subscriptionOfferOptions.itemID = album.id
         isShowingSubscriptionOffer = true
+        #endif
     }
 }
 

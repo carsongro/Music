@@ -92,24 +92,9 @@ import Foundation
         }
         
         self.album = album
-        
-        if !isPlaying {
-            if !isPlaybackQueueSet {
-                player.queue = [album]
-                isPlaybackQueueSet = true
-                beginPlaying()
-            } else {
-                Task {
-                    do {
-                        try await player.play()
-                    } catch {
-                        print("Failed to resume playing with error: \(error).")
-                    }
-                }
-            }
-        } else {
-            player.pause()
-        }
+        player.queue = [album]
+        isPlaybackQueueSet = true
+        beginPlaying()
     }
     
     /// The action to perform when the user taps a track in the list of tracks.
