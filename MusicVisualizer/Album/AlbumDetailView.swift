@@ -62,8 +62,10 @@ struct AlbumDetailView: View {
                 ArtworkImage(artwork, width: 320)
                     .cornerRadius(8)
             }
+            
             Text(album.artistName)
                 .font(.title2.bold())
+            
             playButtonRow
         }
     }

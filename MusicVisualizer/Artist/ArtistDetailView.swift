@@ -12,24 +12,16 @@ struct ArtistDetailView: View {
     var artist: Artist
     @State private var fullArtist: Artist?
     
-    let topSongRows = [
-        GridItem(.fixed(45)),
-        GridItem(.fixed(45)),
-        GridItem(.fixed(45)),
-        GridItem(.fixed(45))
-    ]
-    
     var body: some View {
         Group {
             if let fullArtist {
                 List {
                     Section {
                         if let artwork = fullArtist.artwork {
-                            ArtworkImage(artwork, width: 150)
+                            ArtworkImage(artwork, width: 175)
                                 .clipShape(Circle())
                         }
-                        
-                        Text(fullArtist.name)
+
                     }
                     .listRowSeparator(.hidden)
                     .listSectionSeparator(.hidden)
@@ -37,38 +29,27 @@ struct ArtistDetailView: View {
                     
                     if let songs = fullArtist.topSongs {
                         Section {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                LazyHGrid(rows: topSongRows) {
-                                    ForEach(songs.prefix(upTo: 8)) { song in
-                                        ArtistSongCell(song) {
-                                            MusicPlayerManager.shared.handleSongSelected(song)
-                                        }
-                                        .containerRelativeFrame(
-                                            .horizontal,
-                                            count: 10,
-                                            span: 9,
-                                            spacing: 20
-                                        )
-                                    }
-                                    .scrollTargetLayout()
-                                }
-                            }
-                            .scrollTargetBehavior(.paging)
+                            SongGrid(songs)
+                        } header: {
+                            Text("Top Songs")
                         }
                         .listSectionSeparator(.hidden)
                     }
                     
+                    if let latestRelease = fullArtist.latestRelease {
+                        Section {
+                            ArtistLatestReleaseCell(latestRelease)
+                        } header: {
+                            Text("Latest Release")
+                        }
+                        .listRowSeparator(.hidden)
+                    }
+                    
                     if let albums = fullArtist.albums {
                         Section {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(albums) { album in
-                                        AlbumIconCell(album)
-                                    }
-                                }
-                                .scrollTargetLayout()
-                            }
-                            .scrollTargetBehavior(.viewAligned(limitBehavior: .never))
+                            AlbumsHScrollView(albums)
+                        } header: {
+                            Text("Albums")
                         }
                         .listSectionSeparator(.hidden)
                     }
@@ -78,6 +59,7 @@ struct ArtistDetailView: View {
                 Color.clear
             }
         }
+        .navigationTitle(artist.name)
         .task {
             do {
                 fullArtist = try await artist.with([.featuredAlbums, .topSongs, .albums, .latestRelease])
