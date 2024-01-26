@@ -15,13 +15,15 @@ struct AlbumDetailView: View {
     @State var tracks: MusicItemCollection<Track>?
     @State var relatedAlbums: MusicItemCollection<Album>?
     
+    @State private var artist: Artist?
+    
     init(_ album: Album) {
         self.album = album
     }
     
     var body: some View {
         List {
-            Section(header: header, content: {})
+            Section { } header: { header }
             
             if let tracks, !tracks.isEmpty {
                 Section(header: Text("Tracks")) {
@@ -63,8 +65,11 @@ struct AlbumDetailView: View {
                     .cornerRadius(8)
             }
             
-            Text(album.artistName)
-                .font(.title2.bold())
+            NavigationLink(value: artist) {
+                Text(album.artistName)
+                    .font(.title2.bold())
+            }
+            .buttonStyle(.plain)
             
             playButtonRow
         }
@@ -73,6 +78,7 @@ struct AlbumDetailView: View {
     private func loadTracksAndRelatedAlbums() async throws {
         let detailedAlbum = try await album.with([.artists, .tracks])
         let artist = try await detailedAlbum.artists?.first?.with([.albums])
+        self.artist = artist
         update(tracks: detailedAlbum.tracks, relatedAlbums: artist?.albums)
     }
     

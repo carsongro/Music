@@ -17,16 +17,23 @@ struct ArtistLatestReleaseCell: View {
     
     var body: some View {
         NavigationLink(value: album) {
-            VStack(alignment: .leading) {
+            HStack {
                 if let artwork = album.artwork {
-                    ArtworkImage(artwork, width: 300)
+                    ArtworkImage(artwork, width: 100)
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                 }
                 
-                Text(album.title)
-                    .lineLimit(1)
-                    .frame(width: 300)
+                VStack(alignment: .leading) {
+                    if let releaseDate = album.releaseDate?.formatted(date: .abbreviated, time: .omitted) {
+                        Text(releaseDate)
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.secondary)
+                    }
+                    
+                    Text(album.title)
+                }
             }
         }
         .buttonStyle(.plain)
