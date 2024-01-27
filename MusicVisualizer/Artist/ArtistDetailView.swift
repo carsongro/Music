@@ -77,7 +77,7 @@ struct ArtistDetailView: View {
                 ArtworkImage(
                     artwork,
                     width: width - 30,
-                    height: width * 0.6
+                    height: width - 30
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 6))
             }

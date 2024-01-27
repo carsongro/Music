@@ -16,11 +16,13 @@ struct PlayerView: View {
     @State private var animatedIsPlaying = ApplicationMusicPlayer.shared.state.playbackStatus == .playing
     
     var body: some View {
+        @Bindable var playerManager = MusicPlayerManager.shared
+
         VStack(spacing: 30) {
             if let artwork = player.queue.currentEntry?.artwork {
                 ArtworkImage(artwork, width: animatedIsPlaying ? 330 : 250)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
-                    .shadow(radius: 8, y: 8)
+                    .shadow(radius: animatedIsPlaying ? 12 : 6, y: animatedIsPlaying ? 12 : 6)
                     .frame(height: 330)
             }
             
@@ -37,6 +39,16 @@ struct PlayerView: View {
                 }
                 
                 Spacer()
+            }
+            
+            if let duration = playerManager.currentDuration {
+                PlaybackTimeControlView(
+                    playbackTime: $playerManager.currentPlaybackTime,
+                    duration: duration,
+                    isPlaying: playerState.playbackStatus == .playing
+                ) { newTime in
+                    MusicPlayerManager.shared.setPlaybackTime(newTime)
+                }
             }
             
             playbackControls
@@ -64,7 +76,7 @@ struct PlayerView: View {
         if let artwork = player.queue.currentEntry?.artwork {
             ArtworkImage(artwork, width: 1000)
                 .aspectRatio(contentMode: .fill)
-                .blur(radius: 60)
+                .blur(radius: 80)
         }
     }
     
@@ -107,13 +119,13 @@ struct PlayerView: View {
                 Image(systemName: playerState.playbackStatus == .playing ? "pause.fill" : "play.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .transaction { transaction in
+                        transaction.animation = .none
+                    }
             }
             .buttonStyle(.plain)
             .frame(width: 38, height: 38)
             .frame(maxWidth: .infinity)
-            .transaction { transaction in
-                transaction.animation = .none
-            }
             
             Button {
                 MusicPlayerManager.shared.handleSkipToNext()
@@ -159,8 +171,4 @@ struct MusicVolumeSlider: UIViewRepresentable {
     func updateUIView(_ uiView: MPVolumeView, context: Context) {
         
     }
-}
-
-#Preview {
-    PlayerView()
 }

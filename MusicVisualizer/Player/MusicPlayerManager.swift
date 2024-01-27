@@ -6,12 +6,20 @@
 //
 
 import MusicKit
-import Foundation
+import SwiftUI
+import Combine
 
 @Observable final class MusicPlayerManager {
     static let shared = MusicPlayerManager()
     
-    private init() { }
+    private init() { 
+        queueObservser = ApplicationMusicPlayer.shared.queue.objectWillChange.sink { [weak self] _ in
+            self?.updateCurrentTrackData()
+        }
+    }
+    
+    var currentPlaybackTime: TimeInterval = 0.0
+    var currentDuration: TimeInterval?
     
     var album: Album?
     /// The MusicKit player to use for Apple Music playback.
@@ -22,6 +30,8 @@ import Foundation
     
     /// `true` when the album detail view sets a playback queue on the player.
     public private(set) var isPlaybackQueueSet = false
+    
+    private var queueObservser: AnyCancellable?
     
     private var isPlaying: Bool {
         playerState.playbackStatus == .playing
@@ -35,6 +45,7 @@ import Foundation
             Task {
                 do {
                     try await player.play()
+                    updateCurrentTrackData()
                 } catch {
                     print("Failed to resume playing with error: \(error).")
                 }
@@ -48,6 +59,7 @@ import Foundation
             Task {
                 do {
                     try await player.skipToPreviousEntry()
+                    updateCurrentTrackData()
                 } catch {
                     print("Failed to skip to next entry")
                 }
@@ -57,6 +69,7 @@ import Foundation
                 do {
                     try await player.skipToPreviousEntry()
                     try await player.play()
+                    updateCurrentTrackData()
                 } catch {
                     print("Failed to skip to next entry")
                 }
@@ -110,11 +123,18 @@ import Foundation
         beginPlaying()
     }
     
+    @MainActor
+    func setPlaybackTime(_ newTime: TimeInterval) {
+        player.playbackTime = newTime
+        updateCurrentTrackData()
+    }
+    
     /// A convenience method for beginning music playback.
     ///
     /// Call this instead of `MusicPlayer`’s `play()`
     /// method whenever the playback queue is reset.
     private func beginPlaying() {
+        updateCurrentTrackData()
         Task {
             do {
                 try await player.play()
@@ -122,5 +142,24 @@ import Foundation
                 print("Failed to prepare to play with error: \(error).")
             }
         }
+    }
+    
+    private func updateCurrentTrackData() {
+        Task { @MainActor in
+            currentPlaybackTime = player.playbackTime
+            if let id = player.queue.currentEntry?.item?.id,
+               let song = await getSong(id) {
+                currentDuration = song.duration
+            }
+        }
+    }
+    
+    private func getSong(_ id: MusicItemID) async -> Song? {
+        let songRequest = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: id)
+        let songResponse = try? await songRequest.response()
+        guard let song = songResponse?.items.first(where: { $0.id == id }) else {
+            return nil
+        }
+        return song
     }
 }
