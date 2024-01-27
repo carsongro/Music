@@ -144,7 +144,7 @@ import Combine
         }
     }
     
-    private func updateCurrentTrackData() {
+    func updateCurrentTrackData() {
         Task { @MainActor in
             currentPlaybackTime = player.playbackTime
             if let id = player.queue.currentEntry?.item?.id,

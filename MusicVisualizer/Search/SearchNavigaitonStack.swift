@@ -78,7 +78,7 @@ struct SearchNavigaitonStack: View {
             }
         }
         .listStyle(.plain)
-        .padding(.bottom, 20)
+        .contentMargins(.bottom, 65, for: .scrollContent)
     }
     
     @ViewBuilder

@@ -43,6 +43,7 @@ struct AlbumDetailView: View {
                 }
             }
         }
+        .contentMargins(.bottom, 65, for: .scrollContent)
         .navigationTitle(album.title)
         .task {
             RecentAlbumsStorage.shared.update(with: album)

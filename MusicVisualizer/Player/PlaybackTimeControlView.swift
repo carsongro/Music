@@ -74,6 +74,9 @@ struct PlaybackTimeControlView: View {
                 }
             }
         }
+        .onAppear {
+            MusicPlayerManager.shared.updateCurrentTrackData()
+        }
     }
 }
 

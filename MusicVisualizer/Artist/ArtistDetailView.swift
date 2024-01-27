@@ -53,6 +53,7 @@ struct ArtistDetailView: View {
                         }
                     }
                     .listStyle(.plain)
+                    .contentMargins(.bottom, 65, for: .scrollContent)
                 } else {
                     Color.clear
                 }
