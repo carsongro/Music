@@ -13,17 +13,16 @@ struct PlayerView: View {
     @ObservedObject private var playerState = ApplicationMusicPlayer.shared.state
     private let player = ApplicationMusicPlayer.shared
     
-    @State private var animatedIsPlaying = ApplicationMusicPlayer.shared.state.playbackStatus == .playing
-    
     var body: some View {
         @Bindable var playerManager = MusicPlayerManager.shared
 
         VStack(spacing: 30) {
             if let artwork = player.queue.currentEntry?.artwork {
-                ArtworkImage(artwork, width: animatedIsPlaying ? 330 : 250)
+                ArtworkImage(artwork, width: playerState.playbackStatus == .playing ? 330 : 250)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
-                    .shadow(radius: animatedIsPlaying ? 12 : 6, y: animatedIsPlaying ? 12 : 6)
+                    .shadow(radius: playerState.playbackStatus == .playing ? 12 : 6, y: playerState.playbackStatus == .playing ? 12 : 6)
                     .frame(height: 330)
+                    .animation(.bouncy, value: playerState.playbackStatus == .playing)
             }
             
             HStack {
@@ -60,15 +59,6 @@ struct PlayerView: View {
         .frame(width: 330)
         .background(backgroundBlurImage)
         .padding(.top, 30)
-        .onChange(of: playerState.playbackStatus) { oldValue, newValue in
-            withAnimation(.bouncy) {
-                if newValue == .playing {
-                    animatedIsPlaying = true
-                } else {
-                    animatedIsPlaying = false
-                }
-            }
-        }
     }
     
     @ViewBuilder
@@ -119,9 +109,6 @@ struct PlayerView: View {
                 Image(systemName: playerState.playbackStatus == .playing ? "pause.fill" : "play.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .transaction { transaction in
-                        transaction.animation = .none
-                    }
             }
             .buttonStyle(.plain)
             .frame(width: 38, height: 38)

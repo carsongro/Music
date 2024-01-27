@@ -40,9 +40,6 @@ struct PlayerTray: View {
                     .buttonStyle(.plain)
                     .padding(.trailing, 14)
                     .frame(width: 30, height: 30)
-                    .transaction { transaction in
-                        transaction.animation = .none
-                    }
                     
                     Button {
                         MusicPlayerManager.shared.handleSkipToNext()
