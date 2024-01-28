@@ -11,7 +11,11 @@ import SwiftUI
 /// `TrackCell` is a view to use in a SwiftUI `List` to represent a `Track`.
 struct TrackCell: View {
     
-    init(_ track: Track, from album: Album, action: @escaping () -> Void) {
+    init(
+        _ track: Track,
+        from album: Album,
+        action: @escaping () -> Void
+    ) {
         self.track = track
         self.album = album
         self.action = action

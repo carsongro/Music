@@ -110,6 +110,13 @@ import Combine
         beginPlaying()
     }
     
+    func handlePlayButtonSelected(playlist: Playlist) {
+        self.album = album
+        player.queue = [playlist]
+        isPlaybackQueueSet = true
+        beginPlaying()
+    }
+    
     /// The action to perform when the user taps a track in the list of tracks.
     func handleTrackSelected(_ track: Track, loadedTracks: MusicItemCollection<Track>) {
         player.queue = ApplicationMusicPlayer.Queue(for: loadedTracks, startingAt: track)
