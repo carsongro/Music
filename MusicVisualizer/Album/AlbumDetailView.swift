@@ -70,7 +70,6 @@ struct AlbumDetailView: View {
                 Text(album.artistName)
                     .font(.title2.bold())
             }
-            .buttonStyle(.plain)
             
             playButtonRow
         }
