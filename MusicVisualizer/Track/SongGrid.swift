@@ -32,16 +32,11 @@ struct SongGrid: View {
                     ArtistSongCell(song) {
                         MusicPlayerManager.shared.handleSongSelected(song)
                     }
-                    .containerRelativeFrame(
-                        .horizontal,
-                        count: 10,
-                        span: 9,
-                        spacing: 5.0
-                    )
+                    .containerRelativeFrame(.horizontal)
                 }
                 .scrollTargetLayout()
             }
         }
-        .scrollTargetBehavior(.paging)
+        .scrollTargetBehavior(.viewAligned)
     }
 }

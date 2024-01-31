@@ -26,7 +26,6 @@ struct AlbumIconCell: View {
                 
                 Text(album.title)
                     .lineLimit(1)
-                    .frame(width: 170)
             }
             .containerRelativeFrame(
                 .horizontal,
