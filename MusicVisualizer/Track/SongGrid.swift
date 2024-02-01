@@ -37,6 +37,6 @@ struct SongGrid: View {
                 .scrollTargetLayout()
             }
         }
-        .scrollTargetBehavior(.viewAligned)
+        .scrollTargetBehavior(.paging)
     }
 }
