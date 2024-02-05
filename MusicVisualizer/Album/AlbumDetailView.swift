@@ -68,7 +68,9 @@ struct AlbumDetailView: View {
             
             NavigationLink(value: artist) {
                 Text(album.artistName)
-                    .font(.title2.bold())
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .textCase(nil)
             }
             
             playButtonRow
