@@ -70,15 +70,21 @@ struct ArtistDetailView: View {
     }
     
     struct Header: View {
+        @Environment(\.prefersTabNavigation) private var prefersTabNavigation
+        
         let artist: Artist
         let width: CGFloat
+        
+        private var artworkSize: CGFloat {
+            prefersTabNavigation ? width - 30 : width / 2
+        }
         
         var body: some View {
             if let artwork = artist.artwork {
                 ArtworkImage(
                     artwork,
-                    width: width - 30,
-                    height: width - 30
+                    width: artworkSize,
+                    height: artworkSize
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 6))
             }
