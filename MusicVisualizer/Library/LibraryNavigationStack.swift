@@ -18,12 +18,13 @@ struct LibraryNavigationStack: View {
             LibraryPlaylistList()
                 .environment(libraryModel)
                 .navigationTitle("Library")
-                .navigationDestination(for: Playlist.ID.self) { id in
-                    if let playlist = libraryModel.playlists.first(where: { $0.id == id }) {
-                        PlaylistDetail(playlist)
-                    }
+                .navigationDestination(for: Playlist.self) { playlist in
+                    PlaylistDetail(playlist)
                 }
                 .searchable(text: $libraryModel.searchText)
+                .onChange(of: WelcomeView.PresentationCoordinator.shared.musicAuthorizationStatus) { _, _ in
+                    libraryModel.fetchLibraryData()
+                }
         }
     }
 }

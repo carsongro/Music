@@ -16,7 +16,7 @@ struct PlaylistRow: View {
     }
     
     var body: some View {
-        NavigationLink(value: playlist.id) {
+        NavigationLink(value: playlist) {
             MusicItemCell(
                 artwork: playlist.artwork,
                 title: playlist.name,

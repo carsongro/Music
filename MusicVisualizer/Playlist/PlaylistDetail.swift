@@ -45,6 +45,18 @@ struct PlaylistDetail: View {
                             }
                         }
                     }
+                    
+                    if let moreByCurator = detailedPlaylist.moreByCurator {
+                        Section {
+                            ForEach(moreByCurator) { playlist in
+                                PlaylistRow(playlist)
+                            }
+                        } header: {
+                            if let curatorName = detailedPlaylist.curatorName {
+                                Text("More By \(curatorName)")
+                            }
+                        }
+                    }
                 }
                 .navigationTitle(playlist.name)
                 .contentMargins(.bottom, 65, for: .scrollContent)
@@ -67,7 +79,7 @@ struct PlaylistDetail: View {
     
     private func getDetailedPlaylist() async {
         do {
-            detailedPlaylist = try await playlist.with([.tracks])
+            detailedPlaylist = try await playlist.with([.tracks, .moreByCurator])
         } catch {
             print("Error fetching detailed playlist: \(error.localizedDescription)")
         }
