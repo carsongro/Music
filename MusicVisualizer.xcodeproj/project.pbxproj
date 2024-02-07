@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B8112C512B740FC700870B83 /* ArtistHScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8112C502B740FC700870B83 /* ArtistHScrollView.swift */; };
+		B8112C532B74107C00870B83 /* ArtistCellSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8112C522B74107C00870B83 /* ArtistCellSmall.swift */; };
 		B84748DD2B60564000837262 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84748DC2B60564000837262 /* SongCell.swift */; };
 		B84748DF2B6057CB00837262 /* ArtistDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84748DE2B6057CB00837262 /* ArtistDetailView.swift */; };
 		B84748E12B6057E300837262 /* ArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84748E02B6057E300837262 /* ArtistCell.swift */; };
@@ -40,6 +42,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B8112C502B740FC700870B83 /* ArtistHScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistHScrollView.swift; sourceTree = "<group>"; };
+		B8112C522B74107C00870B83 /* ArtistCellSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCellSmall.swift; sourceTree = "<group>"; };
 		B84748DC2B60564000837262 /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
 		B84748DE2B6057CB00837262 /* ArtistDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailView.swift; sourceTree = "<group>"; };
 		B84748E02B6057E300837262 /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
@@ -89,9 +93,11 @@
 			isa = PBXGroup;
 			children = (
 				B84748E02B6057E300837262 /* ArtistCell.swift */,
+				B8112C522B74107C00870B83 /* ArtistCellSmall.swift */,
 				B84748DE2B6057CB00837262 /* ArtistDetailView.swift */,
 				B899B1522B61EAAF00F3E655 /* ArtistSongCell.swift */,
 				B892C7312B62F91C00DAFBAA /* ArtistLatestReleaseCell.swift */,
+				B8112C502B740FC700870B83 /* ArtistHScrollView.swift */,
 			);
 			path = Artist;
 			sourceTree = "<group>";
@@ -289,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8112C532B74107C00870B83 /* ArtistCellSmall.swift in Sources */,
 				B86D12132B352A9A0018277D /* PlayerTray.swift in Sources */,
 				B892C7322B62F91C00DAFBAA /* ArtistLatestReleaseCell.swift in Sources */,
 				B859D3742B619AA000C883F9 /* AlbumIconCell.swift in Sources */,
@@ -317,6 +324,7 @@
 				B86D120E2B35206C0018277D /* MusicPlayerManager.swift in Sources */,
 				B86D11EF2B34FAAC0018277D /* MusicVisualizerApp.swift in Sources */,
 				B87ADE462B715D5800F95F3D /* Extensions.swift in Sources */,
+				B8112C512B740FC700870B83 /* ArtistHScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

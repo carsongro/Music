@@ -57,6 +57,14 @@ struct PlaylistDetail: View {
                             }
                         }
                     }
+                    
+                    if let featuredArtists = detailedPlaylist.featuredArtists {
+                        Section {
+                            ArtistHScrollView(artists: featuredArtists)
+                        } header: {
+                            Text("Featured Artists")
+                        }
+                    }
                 }
                 .navigationTitle(playlist.name)
                 .contentMargins(.bottom, 65, for: .scrollContent)
@@ -79,7 +87,7 @@ struct PlaylistDetail: View {
     
     private func getDetailedPlaylist() async {
         do {
-            detailedPlaylist = try await playlist.with([.tracks, .moreByCurator])
+            detailedPlaylist = try await playlist.with([.tracks, .moreByCurator, .featuredArtists])
         } catch {
             print("Error fetching detailed playlist: \(error.localizedDescription)")
         }
