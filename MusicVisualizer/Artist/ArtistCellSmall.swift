@@ -17,7 +17,7 @@ struct ArtistCellSmall: View {
                 if let artwork = artist.artwork {
                     VStack {
                         Spacer()
-                        ArtworkImage(artwork, width: 56)
+                        ArtworkImage(artwork, width: 100)
                             .clipShape(Circle())
                         Spacer()
                     }

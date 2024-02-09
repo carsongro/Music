@@ -36,12 +36,7 @@ struct SearchNavigaitonStack: View {
             .welcomeSheet()
             .navigationTitle("Search")
             .searchable(text: $searchTerm, prompt: "Albums, Songs, and Artists")
-            .navigationDestination(for: Album.self) { album in
-                AlbumDetailView(album)
-            }
-            .navigationDestination(for: Artist.self) { artist in
-                ArtistDetailView(artist: artist)
-            }
+            .musicNavigationDestinations()
         }
     }
     

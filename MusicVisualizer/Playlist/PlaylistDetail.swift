@@ -46,7 +46,7 @@ struct PlaylistDetail: View {
                         }
                     }
                     
-                    if let moreByCurator = detailedPlaylist.moreByCurator {
+                    if let moreByCurator = detailedPlaylist.moreByCurator, !moreByCurator.isEmpty {
                         Section {
                             ForEach(moreByCurator) { playlist in
                                 PlaylistRow(playlist)
@@ -64,6 +64,7 @@ struct PlaylistDetail: View {
                         } header: {
                             Text("Featured Artists")
                         }
+                        .listRowBackground(Color(.systemGroupedBackground))
                     }
                 }
                 .navigationTitle(playlist.name)

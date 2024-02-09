@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MusicKit
 
 struct PrefersTabNavigationEnvironmentKey: EnvironmentKey {
     static var defaultValue: Bool = false
@@ -29,3 +30,25 @@ extension PrefersTabNavigationEnvironmentKey: UITraitBridgedEnvironmentKey {
     }
 }
 #endif
+
+struct NavigationDestinations: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .navigationDestination(for: Playlist.self) { playlist in
+                PlaylistDetail(playlist)
+            }
+            .navigationDestination(for: Artist.self) { artist in
+                ArtistDetailView(artist: artist)
+            }
+            .navigationDestination(for: Album.self) { album in
+                AlbumDetailView(album)
+            }
+    }
+}
+
+extension View {
+    func musicNavigationDestinations() -> some View {
+        self
+            .modifier(NavigationDestinations())
+    }
+}

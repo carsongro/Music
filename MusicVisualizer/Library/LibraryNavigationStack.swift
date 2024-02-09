@@ -18,12 +18,7 @@ struct LibraryNavigationStack: View {
             LibraryPlaylistList()
                 .environment(libraryModel)
                 .navigationTitle("Library")
-                .navigationDestination(for: Playlist.self) { playlist in
-                    PlaylistDetail(playlist)
-                }
-                .navigationDestination(for: Artist.self) { artist in
-                    ArtistDetailView(artist: artist)
-                }
+                .musicNavigationDestinations()
                 .searchable(text: $libraryModel.searchText)
                 .onChange(of: WelcomeView.PresentationCoordinator.shared.musicAuthorizationStatus) { _, _ in
                     libraryModel.fetchLibraryData()
