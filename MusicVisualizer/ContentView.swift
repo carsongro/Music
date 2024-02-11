@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View {
         TabView {
             Group {
-                SearchNavigaitonStack()
+                SearchNavigationStack()
                     .tabItem { Label("Search", systemImage: "magnifyingglass") }
                 
                 LibraryNavigationStack()

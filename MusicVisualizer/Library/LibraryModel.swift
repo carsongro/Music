@@ -19,9 +19,9 @@ final class LibraryModel {
     }
     
     func fetchLibraryData() {
-        let request = MusicLibraryRequest<Playlist>()
         Task {
             do {
+                let request = MusicLibraryRequest<Playlist>()
                 let response = try await request.response()
                 playlists = response.items
             } catch {

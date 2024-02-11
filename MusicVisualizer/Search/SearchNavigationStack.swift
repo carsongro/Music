@@ -1,5 +1,5 @@
 //
-//  SearchNavigaitonStack.swift
+//  SearchNavigationStack.swift
 //  MusicVisualizer
 //
 //  Created by Carson Gross on 1/24/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 import MusicKit
 
-struct SearchNavigaitonStack: View {
+struct SearchNavigationStack: View {
     @State private var searchTerm = ""
     @State private var recentAlbumsStorage = RecentAlbumsStorage.shared
     
@@ -154,5 +154,5 @@ struct SearchNavigaitonStack: View {
 }
 
 #Preview {
-    SearchNavigaitonStack()
+    SearchNavigationStack()
 }
