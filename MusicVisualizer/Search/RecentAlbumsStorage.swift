@@ -37,19 +37,6 @@ import MusicKit
             loadRecentlyViewedAlbums()
         }
     }
-
-    // TODO: MAKE THIS WORK, IT MIGHT NOT BECAUSE MUSIC KIT NOT @Observable
-    /// Begins observing MusicKit authorization status.
-    func beginObservingMusicAuthorizationStatus() {
-        _ = withObservationTracking {
-            WelcomeView.PresentationCoordinator.shared.musicAuthorizationStatus
-        } onChange: {
-            Task { @MainActor [weak self] in
-                self?.loadRecentlyViewedAlbums()
-                self?.beginObservingMusicAuthorizationStatus()
-            }
-        }
-    }
     
     /// Clears recently viewed album identifiers from `UserDefaults`.
     func reset() {

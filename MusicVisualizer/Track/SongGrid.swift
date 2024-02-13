@@ -38,5 +38,6 @@ struct SongGrid: View {
             }
         }
         .scrollTargetBehavior(.paging)
+        .contentMargins(10, for: .scrollContent)
     }
 }
