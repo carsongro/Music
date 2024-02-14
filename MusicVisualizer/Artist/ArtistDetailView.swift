@@ -76,7 +76,7 @@ struct ArtistDetailView: View {
         let width: CGFloat
         
         private var artworkSize: CGFloat {
-            prefersTabNavigation ? width - 30 : width / 2
+            prefersTabNavigation ? width - 30 : width / 4
         }
         
         var body: some View {

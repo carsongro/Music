@@ -9,6 +9,7 @@ import SwiftUI
 import MusicKit
 
 struct AlbumIconCell: View {
+    @Environment(\.prefersTabNavigation) private var prefersTabNavigation
     var album: Album
     
     init(_ album: Album) {
@@ -19,7 +20,7 @@ struct AlbumIconCell: View {
         NavigationLink(value: album) {
             VStack(alignment: .leading) {
                 if let artwork = album.artwork {
-                    ArtworkImage(artwork, width: 170)
+                    ArtworkImage(artwork, width: prefersTabNavigation ? 170 : 290)
                         .aspectRatio(contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                 }
@@ -30,8 +31,8 @@ struct AlbumIconCell: View {
             .containerRelativeFrame(
                 .horizontal,
                 count: 16,
-                span: 8,
-                spacing: 10
+                span: prefersTabNavigation ? 8 : 4,
+                spacing: prefersTabNavigation ? 10 : 20
             )
         }
         .buttonStyle(.plain)

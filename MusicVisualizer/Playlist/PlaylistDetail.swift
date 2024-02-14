@@ -52,9 +52,7 @@ struct PlaylistDetail: View {
                                 PlaylistRow(playlist)
                             }
                         } header: {
-                            if let curatorName = detailedPlaylist.curatorName {
-                                Text("More By \(curatorName)")
-                            }
+                            Text("More By " + (detailedPlaylist.curatorName ?? "Curator"))
                         }
                     }
                     

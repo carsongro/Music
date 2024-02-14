@@ -25,5 +25,6 @@ struct AlbumsHScrollView: View {
             .scrollTargetLayout()
         }
         .scrollTargetBehavior(.viewAligned(limitBehavior: .never))
+        .contentMargins(20, for: .scrollContent)
     }
 }
