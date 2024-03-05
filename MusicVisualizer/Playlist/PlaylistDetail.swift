@@ -9,8 +9,10 @@ import SwiftUI
 import MusicKit
 
 struct PlaylistDetail: View {
+    @Environment(LibraryModel.self) private var libraryModel
     let playlist: Playlist
     @State private var detailedPlaylist: Playlist?
+    @State private var showingPlaylistPicker = false
     
     private var isPlaying: Bool {
         return (ApplicationMusicPlayer.shared.state.playbackStatus == .playing)
@@ -41,6 +43,23 @@ struct PlaylistDetail: View {
                                         subtitle: track.artistName
                                     )
                                     .frame(minHeight: 50)
+                                    .contextMenu {
+                                        Button("Add to playlist", systemImage: "plus") {
+                                            showingPlaylistPicker = true
+                                        }
+                                    }
+                                    .sheet(isPresented: $showingPlaylistPicker) {
+                                        Task {
+                                            await getDetailedPlaylist()
+                                        }
+                                    } content:  {
+                                        PlaylistAddToPlaylistView(
+                                            showingPlaylistPicker: $showingPlaylistPicker,
+                                            selectedTrack: track
+                                        )
+                                        .environment(libraryModel)
+                                    }
+
                                 }
                             }
                         }

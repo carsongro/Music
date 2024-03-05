@@ -36,6 +36,7 @@ struct NavigationDestinations: ViewModifier {
         content
             .navigationDestination(for: Playlist.self) { playlist in
                 PlaylistDetail(playlist)
+                    .environment(LibraryModel.shared)
             }
             .navigationDestination(for: Artist.self) { artist in
                 ArtistDetailView(artist: artist)

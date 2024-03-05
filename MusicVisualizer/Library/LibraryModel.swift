@@ -10,11 +10,13 @@ import MusicKit
 
 @Observable
 final class LibraryModel {
+    static let shared = LibraryModel()
+    
     var playlists = MusicItemCollection<Playlist>()
     
     var searchText = ""
     
-    init() {
+    private init() {
         fetchLibraryData()
     }
     

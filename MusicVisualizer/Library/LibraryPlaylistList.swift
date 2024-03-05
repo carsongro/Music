@@ -35,5 +35,5 @@ extension Playlist {
 
 #Preview {
     LibraryPlaylistList()
-        .environment(LibraryModel())
+        .environment(LibraryModel.shared)
 }

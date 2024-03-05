@@ -9,7 +9,7 @@ import SwiftUI
 import MusicKit
 
 struct LibraryNavigationStack: View {
-    @State private var libraryModel = LibraryModel()
+    @State private var libraryModel = LibraryModel.shared
     
     var body: some View {
         @Bindable var libraryModel = libraryModel
