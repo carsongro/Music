@@ -17,13 +17,7 @@ struct PlayerView: View {
         @Bindable var playerManager = MusicPlayerManager.shared
 
         VStack(spacing: 30) {
-            if let artwork = player.queue.currentEntry?.artwork {
-                ArtworkImage(artwork, width: playerState.playbackStatus == .playing ? 330 : 250)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                    .shadow(radius: playerState.playbackStatus == .playing ? 12 : 6, y: playerState.playbackStatus == .playing ? 12 : 6)
-                    .frame(height: 330)
-                    .animation(.bouncy, value: playerState.playbackStatus == .playing)
-            }
+            PlayerHScrollView()
             
             HStack {
                 VStack(alignment: .leading) {

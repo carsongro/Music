@@ -21,6 +21,8 @@ import Combine
     var currentPlaybackTime: TimeInterval = 0.0
     var currentDuration: TimeInterval?
     
+    var currentSong: Song?
+    
     var album: Album?
     /// The MusicKit player to use for Apple Music playback.
     private let player = ApplicationMusicPlayer.shared
@@ -157,6 +159,7 @@ import Combine
             if let id = player.queue.currentEntry?.item?.id,
                let song = await getSong(id) {
                 currentDuration = song.duration
+                currentSong = song
             }
         }
     }

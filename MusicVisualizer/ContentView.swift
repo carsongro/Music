@@ -31,6 +31,7 @@ struct ContentView: View {
             }
             .sheet(isPresented: $showingFullScreenPlayer) {
                 PlayerView()
+                    .ignoresSafeArea(edges: .horizontal)
                     .presentationDragIndicator(.visible)
             }
         }

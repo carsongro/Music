@@ -37,6 +37,8 @@
 		B892C7342B62F99200DAFBAA /* SongGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = B892C7332B62F99200DAFBAA /* SongGrid.swift */; };
 		B892C7362B62FA7100DAFBAA /* AlbumsHScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B892C7352B62FA7100DAFBAA /* AlbumsHScrollView.swift */; };
 		B899B1532B61EAAF00F3E655 /* ArtistSongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899B1522B61EAAF00F3E655 /* ArtistSongCell.swift */; };
+		B89DBFB42BA39AAC00463F2A /* PlayerHScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89DBFB32BA39AAC00463F2A /* PlayerHScrollView.swift */; };
+		B89DBFB62BA39AFF00463F2A /* PlayerArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89DBFB52BA39AFF00463F2A /* PlayerArtworkView.swift */; };
 		B8B618992B61892700F089C2 /* SearchNavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B618982B61892700F089C2 /* SearchNavigationStack.swift */; };
 		B8B6189C2B6189FD00F089C2 /* LibraryNavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B6189B2B6189FD00F089C2 /* LibraryNavigationStack.swift */; };
 		B8F750A42B97DECD00B44213 /* AddToPlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F750A32B97DECD00B44213 /* AddToPlaylistCell.swift */; };
@@ -76,6 +78,8 @@
 		B892C7332B62F99200DAFBAA /* SongGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongGrid.swift; sourceTree = "<group>"; };
 		B892C7352B62FA7100DAFBAA /* AlbumsHScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsHScrollView.swift; sourceTree = "<group>"; };
 		B899B1522B61EAAF00F3E655 /* ArtistSongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSongCell.swift; sourceTree = "<group>"; };
+		B89DBFB32BA39AAC00463F2A /* PlayerHScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHScrollView.swift; sourceTree = "<group>"; };
+		B89DBFB52BA39AFF00463F2A /* PlayerArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerArtworkView.swift; sourceTree = "<group>"; };
 		B8B618982B61892700F089C2 /* SearchNavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigationStack.swift; sourceTree = "<group>"; };
 		B8B6189B2B6189FD00F089C2 /* LibraryNavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryNavigationStack.swift; sourceTree = "<group>"; };
 		B8F750A32B97DECD00B44213 /* AddToPlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistCell.swift; sourceTree = "<group>"; };
@@ -199,6 +203,8 @@
 				B86D120D2B35206C0018277D /* MusicPlayerManager.swift */,
 				B86D12122B352A9A0018277D /* PlayerTray.swift */,
 				B86D12152B35317C0018277D /* PlayerView.swift */,
+				B89DBFB32BA39AAC00463F2A /* PlayerHScrollView.swift */,
+				B89DBFB52BA39AFF00463F2A /* PlayerArtworkView.swift */,
 				B8824C032B65870B000A012B /* PlaybackTimeControlView.swift */,
 			);
 			path = Player;
@@ -302,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8112C532B74107C00870B83 /* ArtistCellSmall.swift in Sources */,
+				B89DBFB42BA39AAC00463F2A /* PlayerHScrollView.swift in Sources */,
 				B86D12132B352A9A0018277D /* PlayerTray.swift in Sources */,
 				B892C7322B62F91C00DAFBAA /* ArtistLatestReleaseCell.swift in Sources */,
 				B859D3742B619AA000C883F9 /* AlbumIconCell.swift in Sources */,
@@ -318,6 +325,7 @@
 				B86D12112B3524050018277D /* ProminentButtonStyle.swift in Sources */,
 				B8B6189C2B6189FD00F089C2 /* LibraryNavigationStack.swift in Sources */,
 				B8824C042B65870B000A012B /* PlaybackTimeControlView.swift in Sources */,
+				B89DBFB62BA39AFF00463F2A /* PlayerArtworkView.swift in Sources */,
 				B84748E12B6057E300837262 /* ArtistCell.swift in Sources */,
 				B85796EF2B6598B40018AFBD /* LibraryPlaylistList.swift in Sources */,
 				B85796F12B6599500018AFBD /* PlaylistDetail.swift in Sources */,
