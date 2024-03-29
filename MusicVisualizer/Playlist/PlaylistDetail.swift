@@ -59,7 +59,7 @@ struct PlaylistDetail: View {
                                         )
                                         .environment(libraryModel)
                                     }
-
+                                    
                                 }
                             }
                         }
@@ -93,14 +93,6 @@ struct PlaylistDetail: View {
         .task {
             await getDetailedPlaylist()
         }
-        .task {
-            for await subscription in MusicSubscription.subscriptionUpdates {
-                musicSubscription = subscription
-            }
-        }
-        #if canImport(MusicSubscriptionOffer)
-        .musicSubscriptionOffer(isPresented: $isShowingSubscriptionOffer, options: subscriptionOfferOptions)
-        #endif
     }
     
     private func getDetailedPlaylist() async {
@@ -123,19 +115,8 @@ struct PlaylistDetail: View {
         }
     }
     
-    
-    @State private var musicSubscription: MusicSubscription?
     private let playButtonTitle: LocalizedStringKey = "Play"
     
-    private var isPlayButtonDisabled: Bool {
-        let canPlayCatalogContent = musicSubscription?.canPlayCatalogContent ?? false
-        return !canPlayCatalogContent
-    }
-    
-    private var shouldOfferSubscription: Bool {
-        let canBecomeSubscriber = musicSubscription?.canBecomeSubscriber ?? false
-        return canBecomeSubscriber
-    }
     /// A declaration of the Play/Pause button, and (if appropriate) the Join button, side by side.
     private var playButtonRow: some View {
         HStack {
@@ -151,40 +132,8 @@ struct PlaylistDetail: View {
                 .frame(maxWidth: 200)
             }
             .buttonStyle(.prominent)
-            .disabled(isPlayButtonDisabled)
             .animation(.easeInOut(duration: 0.1), value: isPlaying)
-            
-            if shouldOfferSubscription {
-                subscriptionOfferButton
-            }
         }
-    }
-    
-    // MARK: - Subscription offer
-    
-    private var subscriptionOfferButton: some View {
-        Button(action: handleSubscriptionOfferButtonSelected) {
-            HStack {
-                Image(systemName: "applelogo")
-                Text("Join")
-            }
-            .frame(maxWidth: 200)
-        }
-        .buttonStyle(.prominent)
-    }
-    
-    @State private var isShowingSubscriptionOffer = false
-    
-    #if canImport(MusicSubscriptionOffer)
-    @State private var subscriptionOfferOptions: MusicSubscriptionOffer.Options = .default
-    #endif
-    
-    /// Computes the presentation state for a subscription offer.
-    private func handleSubscriptionOfferButtonSelected() {
-        #if canImport(MusicSubscriptionOffer)
-        subscriptionOfferOptions.messageIdentifier = .playMusic
-        subscriptionOfferOptions.itemID = album.id
-        isShowingSubscriptionOffer = true
-        #endif
+        .canOfferSubscription(for: playlist.id, messageIdentifier: .playMusic, disableContent: true)
     }
 }

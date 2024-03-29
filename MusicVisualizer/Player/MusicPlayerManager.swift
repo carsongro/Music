@@ -22,6 +22,7 @@ import Combine
     var currentDuration: TimeInterval?
     
     var currentSong: Song?
+    var currentTracks: MusicItemCollection<Track>?
     
     var album: Album?
     /// The MusicKit player to use for Apple Music playback.
@@ -121,6 +122,7 @@ import Combine
     
     /// The action to perform when the user taps a track in the list of tracks.
     func handleTrackSelected(_ track: Track, loadedTracks: MusicItemCollection<Track>) {
+        currentTracks = loadedTracks
         player.queue = ApplicationMusicPlayer.Queue(for: loadedTracks, startingAt: track)
         isPlaybackQueueSet = true
         beginPlaying()
@@ -128,6 +130,13 @@ import Combine
     
     func handleSongSelected(_ song: Song) {
         player.queue = ApplicationMusicPlayer.Queue(for: [song], startingAt: song)
+        isPlaybackQueueSet = true
+        beginPlaying()
+    }
+    
+    func handleSwipe(_ entry: Track) {
+        guard let currentTracks else { return }
+        player.queue = ApplicationMusicPlayer.Queue(for: currentTracks, startingAt: entry)
         isPlaybackQueueSet = true
         beginPlaying()
     }
@@ -159,7 +168,9 @@ import Combine
             if let id = player.queue.currentEntry?.item?.id,
                let song = await getSong(id) {
                 currentDuration = song.duration
-                currentSong = song
+                withAnimation {
+                    currentSong = song
+                }
             }
         }
     }

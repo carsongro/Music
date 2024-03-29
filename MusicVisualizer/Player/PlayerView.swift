@@ -57,10 +57,11 @@ struct PlayerView: View {
     
     @ViewBuilder
     private var backgroundBlurImage: some View {
-        if let artwork = player.queue.currentEntry?.artwork {
+        if let artwork = MusicPlayerManager.shared.currentSong?.artwork {
             ArtworkImage(artwork, width: 1000)
                 .aspectRatio(contentMode: .fill)
                 .blur(radius: 80)
+                .animation(.default, value: MusicPlayerManager.shared.currentSong)
         }
     }
     
