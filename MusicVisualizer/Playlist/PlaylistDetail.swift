@@ -93,6 +93,7 @@ struct PlaylistDetail: View {
         .task {
             await getDetailedPlaylist()
         }
+        .canOfferSubscription(for: playlist.id, messageIdentifier: .playMusic, disableContent: false)
     }
     
     private func getDetailedPlaylist() async {
